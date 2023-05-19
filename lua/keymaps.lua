@@ -1,17 +1,3 @@
-local opt = { noremap = true, silent = true }
--- shift between windows
-vim.keymap.set("n", "<C-l>", "<C-w>l", opt)
-vim.keymap.set("n", "<C-h>", "<C-w>h", opt)
-vim.keymap.set("n", "<C-j>", "<C-w>j", opt)
-vim.keymap.set("n", "<C-k>", "<C-w>k", opt)
--- split windows
-vim.keymap.set("n", "<Leader>v", "<C-w>v", opt)
-vim.keymap.set("n", "<Leader>s", "<C-w>s", opt)
--- close current window
-vim.keymap.set({"n", "v"}, "<leader>q", "<cmd>q!<cr>", opt)
--- save file
-vim.keymap.set({"n", "v"}, "<leader>w", "<cmd>w<cr>", opt)
-
 local function map(mode, lhs, rhs, opts)
   local keys = require("lazy.core.handler").handlers.keys
   ---@cast keys LazyKeysHandler
@@ -23,6 +9,21 @@ local function map(mode, lhs, rhs, opts)
   end
 end
 
+-- Move to window using the <ctrl> hjkl keys
+map("n", "<C-h>", "<C-w>h", { desc = "Go to left window" })
+map("n", "<C-j>", "<C-w>j", { desc = "Go to lower window" })
+map("n", "<C-k>", "<C-w>k", { desc = "Go to upper window" })
+map("n", "<C-l>", "<C-w>l", { desc = "Go to right window" })
+
+-- split windows
+map("n", "<Leader>v", "<C-w>v", { desc = "Split windows vertical" })
+map("n", "<Leader>s", "<C-w>s", { desc = "Split windows horizontal" })
+-- close current window
+map({"n", "v"}, "<leader>q", "<cmd>q!<cr>", { desc = "Close current window" })
+map({"n", "v"}, "<leader>qq", "<cmd>qa<cr>", { desc = "Quit all" })
+-- save file
+map({"n", "v"}, "<leader>w", "<cmd>w<cr><esc>", { desc = "Save current file" })
+
 -- Move Lines, not for macOS
 map("n", "<A-j>", "<cmd>m .+1<cr>==", { desc = "Move down" })
 map("n", "<A-k>", "<cmd>m .-2<cr>==", { desc = "Move up" })
@@ -30,3 +31,10 @@ map("i", "<A-j>", "<esc><cmd>m .+1<cr>==gi", { desc = "Move down" })
 map("i", "<A-k>", "<esc><cmd>m .-2<cr>==gi", { desc = "Move up" })
 map("v", "<A-j>", ":m '>+1<cr>gv=gv", { desc = "Move down" })
 map("v", "<A-k>", ":m '<-2<cr>gv=gv", { desc = "Move up" })
+
+-- better indenting
+map("v", "<", "<gv")
+map("v", ">", ">gv")
+
+-- lazy
+map("n", "<leader>l", "<cmd>:Lazy<cr>", { desc = "Lazy" })

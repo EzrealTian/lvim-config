@@ -1,6 +1,5 @@
 -- load basic settings
 require("basic")
-
 -- load lazy nvim
 require("lazy-config")
 -- load keymaps
