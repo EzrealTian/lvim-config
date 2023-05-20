@@ -4,7 +4,13 @@ return {
   event = "VeryLazy",
   cmd = "NvimTreeToggle",
   keys = {
-    { "<leader>e", ":NvimTreeFindFileToggle <CR>", desc = "Explorer FileTree" },
+    {
+      "<leader>e", 
+      function()
+        require('nvim-tree.api').tree.open({path = require("utils").get_root() })
+      end,
+      desc = "Explorer FileTree"
+    },
   },
   
   config = function()
