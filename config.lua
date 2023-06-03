@@ -14,10 +14,16 @@ lvim.plugins = {
       rt.setup({
         server = {
           on_attach = function(_, bufnr)
-            -- Hover actions
-            vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
-            -- Code action groups
-            vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
+            vim.keymap.set("n", "<gl>", function()
+              local float = vim.diagnostic.config().float
+
+              if float then
+                local config = type(float) == "table" and float or {}
+                config.scope = "line"
+
+                vim.diagnostic.open_float(config)
+              end
+            end, { buffer = bufnr })
           end,
         },
       })
@@ -114,11 +120,11 @@ lvim.builtin.project.patterns = { ".git" }
 
 
 -- basic config
-lvim.format_on_save.enabled = true
 vim.opt.clipboard = "unnamedplus"
 vim.opt.list = true
 vim.opt.listchars = "tab:<->,space:·" -- show space as ·
 vim.opt.expandtab = true
+vim.opt.relativenumber = true
 
 -- key mapping
 lvim.keys.normal_mode["<Leader>rn"] = "<Cmd>lua vim.lsp.buf.rename()<CR>"
@@ -129,6 +135,10 @@ lvim.keys.normal_mode["<Leader>l"] = "<Cmd>Lazy<CR>"
 
 
 -- auto cmd
+local fn = function()
+  vim.cmd [[ lua require('lvim.lsp.utils').format() ]]
+  vim.cmd [[ 1,$s/\t/    /g ]]
+end
 lvim.autocommands = {
   {
     "VimEnter", {
@@ -138,4 +148,20 @@ lvim.autocommands = {
     end
   },
   },
+  {
+    "BufWritePre", {
+    pattern = { "*.go" },
+    callback = function()
+      pcall(fn)
+    end
+  }
+  },
+  {
+    "BufWritePre", {
+    pattern = { "*.cpp", "*.cc", "*.h", "*.rs", "*.c", "*.lua" },
+    callback = function()
+      vim.cmd [[ lua require('lvim.lsp.utils').format() ]]
+    end
+  }
+  }
 }
