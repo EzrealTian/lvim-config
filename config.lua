@@ -83,85 +83,15 @@ lvim.plugins = {
 }
 
 -- plugin config
-lvim.builtin.alpha.dashboard.section.header = {
-  type = "text",
-  val = {
-    [[                                                ]],
-    [[                                                ]],
-    [[                                                ]],
-    [[███████╗███████╗██████╗ ███████╗ █████╗ ██╗     ]],
-    [[██╔════╝╚══███╔╝██╔══██╗██╔════╝██╔══██╗██║     ]],
-    [[█████╗    ███╔╝ ██████╔╝█████╗  ███████║██║     ]],
-    [[██╔══╝   ███╔╝  ██╔══██╗██╔══╝  ██╔══██║██║     ]],
-    [[███████╗███████╗██║  ██║███████╗██║  ██║███████╗]],
-    [[╚══════╝╚══════╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚══════╝]],
-    [[                                                ]],
-    [[                                                ]],
-    [[                                                ]],
-  },
-  opts = {
-    position = "center",
-    hl = "Type",
-  },
-}
-lvim.builtin.alpha.dashboard.section.footer = {
-  type = "text",
-  val = {
-    " For the open source!!!",
-    "www.github.com/EzrealTian"
-  },
-  opts = {
-    position = "center",
-    hl = "Number",
-  },
-}
+vim.cmd('source ~/.config/lvim/lua/plugin/alpha.lua')
+vim.cmd('source ~/.config/lvim/lua/plugin/lualine.lua')
 lvim.colorscheme = "catppuccin"
 lvim.builtin.project.patterns = { ".git" }
 
 
--- basic config
-vim.opt.clipboard = "unnamedplus"
-vim.opt.list = true
-vim.opt.listchars = "tab:<->,space:·" -- show space as ·
-vim.opt.expandtab = true
-vim.opt.relativenumber = true
-
--- key mapping
-lvim.keys.normal_mode["<Leader>rn"] = "<Cmd>lua vim.lsp.buf.rename()<CR>"
-lvim.keys.normal_mode["<S-l>"] = "<Cmd>BufferLineCycleNext<CR>"
-lvim.keys.normal_mode["<S-h>"] = "<Cmd>BufferLineCyclePrev<CR>"
-lvim.keys.normal_mode["<S-c>"] = "<Cmd>BufferKill<CR>"
-lvim.keys.normal_mode["<Leader>l"] = "<Cmd>Lazy<CR>"
+vim.cmd('source ~/.config/lvim/lua/basic.lua')
+vim.cmd('source ~/.config/lvim/lua/autocmd.lua')
+vim.cmd('source ~/.config/lvim/lua/mapping.lua')
 
 
--- auto cmd
-local fn = function()
-  vim.cmd [[ lua require('lvim.lsp.utils').format() ]]
-  vim.cmd [[ 1,$s/\t/    /g ]]
-end
-lvim.autocommands = {
-  {
-    "VimEnter", {
-    pattern = { "*" },
-    callback = function()
-      vim.o.background = "dark"
-    end
-  },
-  },
-  {
-    "BufWritePre", {
-    pattern = { "*.go" },
-    callback = function()
-      pcall(fn)
-    end
-  }
-  },
-  {
-    "BufWritePre", {
-    pattern = { "*.cpp", "*.cc", "*.h", "*.rs", "*.c", "*.lua" },
-    callback = function()
-      vim.cmd [[ lua require('lvim.lsp.utils').format() ]]
-    end
-  }
-  }
-}
+
