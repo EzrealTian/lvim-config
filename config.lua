@@ -83,15 +83,18 @@ lvim.plugins = {
 }
 
 -- plugin config
-vim.cmd('source ~/.config/lvim/lua/plugin/alpha.lua')
-vim.cmd('source ~/.config/lvim/lua/plugin/lualine.lua')
+require('plugin.alpha')
+require('plugin.lualine')
+-- vim.cmd('source ~/.config/lvim/lua/plugin/alpha.lua')
+-- vim.cmd('source ~/.config/lvim/lua/plugin/lualine.lua')
 lvim.colorscheme = "catppuccin"
 lvim.builtin.project.patterns = { ".git" }
 
+require('basic')
+require('autocmd')
+require('mapping')
 
-vim.cmd('source ~/.config/lvim/lua/basic.lua')
-vim.cmd('source ~/.config/lvim/lua/autocmd.lua')
-vim.cmd('source ~/.config/lvim/lua/mapping.lua')
-
-
-
+require('dap.dap-config')
+-- vim.cmd('source ~/.config/lvim/lua/basic.lua')
+-- vim.cmd('source ~/.config/lvim/lua/autocmd.lua')
+-- vim.cmd('source ~/.config/lvim/lua/mapping.lua')
