@@ -1,5 +1,4 @@
 vim.cmd("setlocal tabstop=8 shiftwidth=8")
-vim.opt.expandtab = false
 
 local formatters = require "lvim.lsp.null-ls.formatters"
 local lvim_config_dir = os.getenv "LUNARVIM_CONFIG_DIR"

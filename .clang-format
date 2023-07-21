@@ -1,6 +1,11 @@
 BasedOnStyle: LLVM
 IndentWidth: 8
-UseTab: Always
+UseTab: Never
 BreakBeforeBraces: Linux
 AllowShortIfStatementsOnASingleLine: Never
 IndentCaseLabels: false
+
+AlignConsecutiveMacros:
+  Enabled: true
+  AcrossEmptyLines: true
+  AcrossComments: false
