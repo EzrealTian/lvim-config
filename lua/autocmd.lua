@@ -1,8 +1,4 @@
 -- auto cmd
-local fn = function()
-  vim.cmd [[ lua require('lvim.lsp.utils').format() ]]
-  vim.cmd [[ 1,$s/\t/    /g ]]
-end
 lvim.autocommands = {
   {
     "VimEnter", {
@@ -14,19 +10,10 @@ lvim.autocommands = {
   },
   {
     "BufWritePre", {
-    pattern = { "*.go" },
-    callback = function()
-      pcall(fn)
-    end
-  }
-  },
-  {
-    "BufWritePre", {
-    pattern = { "*.cpp", "*.cc", "*.h", "*.rs", "*.c", "*.lua" },
+    pattern = { "*" },
     callback = function()
       vim.cmd [[ lua require('lvim.lsp.utils').format() ]]
     end
   }
   }
 }
-
